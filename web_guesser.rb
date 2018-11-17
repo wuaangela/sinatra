@@ -15,9 +15,30 @@
 require 'sinatra'
 require 'sinatra/reloader'
 
-number = rand(100)
+NUMBER = rand(100)
+msg = []
+bgcolour = 'white'
 
 get '/' do
-    erb :index, :locals => {:number => number}
+    guess = params['guess'].to_i
+    msg = check(guess)
+    erb :index, :locals => {:number => NUMBER, :msg => msg[0], :bgcolour => msg[1]}
+end 
+
+def check(x) 
+    case 
+    when x > NUMBER + 5
+        ['Way too high!', 'red']
+    when x > NUMBER
+        ['Too high!', 'pink']
+    when x < NUMBER - 5 
+        ['Way too low!', 'red']
+    when x < NUMBER 
+        ['Too low!', 'pink']
+    when x == NUMBER 
+        ['You got it right! The secret number is ' + NUMBER.to_s, 'green']
+    else 
+        'Not a valid input!'
+    end
 end
 
