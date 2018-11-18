@@ -22,8 +22,9 @@ bgcolour = 'white'
 
 get '/' do
     guess = params['guess'].to_i
+    cheat = params['cheat']
     msg = check(guess)
-    erb :index, :locals => {:number => settings.NUMBER, :msg => msg[0], :bgcolour => msg[1], :triesleft => @@triesleft}
+    erb :index, :locals => {:number => settings.NUMBER, :msg => msg[0], :bgcolour => msg[1], :triesleft => @@triesleft, :cheat => cheat}
 end 
 
 def check(x) 
